@@ -1,0 +1,6 @@
+Combined Data.csv
+cleaned_data.csv
+*.pkl
+*.zip
+__pycache__/
+*.pyc
