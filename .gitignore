@@ -1,6 +1,9 @@
 Combined Data.csv
 cleaned_data.csv
 *.pkl
+!mh_model.pkl
+!vectorizer.pkl
 *.zip
 __pycache__/
 *.pyc
+mood_log.db
