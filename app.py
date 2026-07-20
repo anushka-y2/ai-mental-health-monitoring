@@ -48,10 +48,13 @@ SEVERITY_LEVELS = {
 }
 
 KEYWORD_LEVELS = {
-    0: ['happy', 'great', 'good day', 'excited', 'joyful', 'wonderful', 'grateful', 'amazing', 'awesome', 'content'],
-    1: ['okay', 'fine', 'alright', 'not bad', 'meh', 'so so', 'decent'],
-    2: ['sad', 'down', 'unhappy', 'low', 'upset', 'lonely', 'tired of everything', 'crying'],
-    3: ['depressed', 'anxious', 'overwhelmed', "can't cope", 'panic', 'worthless', 'hopeless', 'exhausted', 'breaking down'],
+    0: ['happy', 'great', 'good day', 'excited', 'joyful', 'wonderful', 'grateful',
+        'amazing', 'awesome', 'content', 'good', 'nice', 'fantastic', 'delighted'],
+    1: ['okay', 'fine', 'alright', 'not bad', 'meh', 'so so', 'decent', 'neutral'],
+    2: ['sad', 'down', 'unhappy', 'low', 'upset', 'lonely', 'tired of everything',
+        'crying', 'bad', 'not good', 'not great', 'rough day', 'terrible day'],
+    3: ['depressed', 'anxious', 'overwhelmed', "can't cope", 'panic', 'worthless',
+        'hopeless', 'exhausted', 'breaking down', 'awful', 'horrible'],
     4: ['end it all', 'ending it all', 'kill myself', 'want to die', 'not worth living',
         'better off dead', 'no reason to live', 'suicidal', 'suicide', 'hurt myself', 'self harm'],
 }
@@ -78,9 +81,16 @@ def predict_status(text):
 
     kw_level = keyword_severity(text)
     ml_level = CATEGORY_TO_SEVERITY.get(pred, 1)
-    final_level = max(kw_level, ml_level) if kw_level is not None else ml_level
 
-    if kw_level == 4:
+    if kw_level is not None:
+        if kw_level == 4 or ml_level == 4:
+            final_level = 4
+        else:
+            final_level = kw_level
+    else:
+        final_level = ml_level
+
+    if final_level == 4:
         pred = 'Suicidal'
         confidence = 1.0
 
